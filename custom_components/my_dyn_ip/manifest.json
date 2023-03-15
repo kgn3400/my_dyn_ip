@@ -1,0 +1,14 @@
+{
+  "domain": "my_dyn_ip",
+  "name": "My dyn ip",
+  "codeowners": ["@kgn3400"],
+  "config_flow": true,
+  "dependencies": [],
+  "documentation": "https://github.com/kgn3400/my_dyn_ip",
+  "homekit": {},
+  "iot_class": "cloud_polling",
+  "requirements": [],
+  "ssdp": [],
+  "zeroconf": [],
+  "version": "1.0.0"
+}
