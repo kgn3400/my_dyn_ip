@@ -17,8 +17,8 @@ from datetime import datetime, timedelta
 # ------------------------------------------------------------------
 # ------------------------------------------------------------------
 @dataclass
-class MyDynIpApi:
-    """My dyn ip interface"""
+class ComponentApi:
+    """My dyn ip Api"""
 
     def __init__(
         self,
@@ -33,17 +33,17 @@ class MyDynIpApi:
 
     # ------------------------------------------------------------------
     async def reset_service(self, call: ServiceCall) -> None:
-        """My dyn ip service interface"""
+        """My dyn ip service api"""
         self.changed = False
 
     # ------------------------------------------------------------------
     async def update_service(self, call: ServiceCall) -> None:
-        """My dyn ip service interface"""
+        """My dyn ip service api"""
         await self.update()
 
     # ------------------------------------------------------------------
     async def update(self) -> None:
-        """My dyn ip interface"""
+        """My dyn ip api"""
 
         if self.changed and self._clear_changed_at < datetime.now():
             self.changed = False

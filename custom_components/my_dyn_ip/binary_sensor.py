@@ -8,8 +8,8 @@ from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .const import DOMAIN
-from .entity import MyDynIpEntity
-from .my_dyn_ip_api import MyDynIpApi
+from .entity import ComponentEntity
+from .component_api import ComponentApi
 
 
 # ------------------------------------------------------
@@ -20,18 +20,18 @@ async def async_setup_entry(
 ) -> None:
     """Setup for My dyn ip"""
     coordinator = hass.data[DOMAIN][entry.entry_id]["coordinator"]
-    my_dyn_ip_api: MyDynIpApi = hass.data[DOMAIN][entry.entry_id]["my_dyn_ip_api"]
+    component_api: ComponentApi = hass.data[DOMAIN][entry.entry_id]["component_api"]
 
     sensors = []
 
-    sensors.append(MyDynIpBinarySensor(coordinator, entry, my_dyn_ip_api))
+    sensors.append(MyDynIpBinarySensor(coordinator, entry, component_api))
 
     async_add_entities(sensors)
 
 
 # ------------------------------------------------------
 # ------------------------------------------------------
-class MyDynIpBinarySensor(MyDynIpEntity, BinarySensorEntity):
+class MyDynIpBinarySensor(ComponentEntity, BinarySensorEntity):
     """Sensor class for My dyn ip"""
 
     # ------------------------------------------------------
@@ -39,11 +39,11 @@ class MyDynIpBinarySensor(MyDynIpEntity, BinarySensorEntity):
         self,
         coordinator: DataUpdateCoordinator,
         entry: ConfigEntry,
-        my_dyn_ip_api: MyDynIpApi,
+        component_api: ComponentApi,
     ) -> None:
         super().__init__(coordinator, entry)
 
-        self.my_dyn_ip_api = my_dyn_ip_api
+        self.component_api = component_api
         self.coordinator = coordinator
 
         self._name = "Changed"
@@ -64,7 +64,7 @@ class MyDynIpBinarySensor(MyDynIpEntity, BinarySensorEntity):
     def is_on(self) -> bool:
         """Get the state."""
 
-        return self.my_dyn_ip_api.changed
+        return self.component_api.changed
 
     # ------------------------------------------------------
     @property

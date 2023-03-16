@@ -9,7 +9,7 @@ from homeassistant.data_entry_flow import FlowResult
 from .const import DOMAIN_NAME, DOMAIN
 
 
-class SunConfigFlow(ConfigFlow, domain=DOMAIN):
+class ComponentConfigFlow(ConfigFlow, domain=DOMAIN):
     """Config flow for My dyn ip."""
 
     VERSION = 1
@@ -24,5 +24,3 @@ class SunConfigFlow(ConfigFlow, domain=DOMAIN):
 
         # if user_input is not None:
         return self.async_create_entry(title=DOMAIN_NAME, data={})
-
-        # return self.async_show_form(step_id="user")

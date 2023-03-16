@@ -15,7 +15,7 @@ from .const import (
     DOMAIN,
     LOGGER,
 )
-from .my_dyn_ip_api import MyDynIpApi
+from .component_api import ComponentApi
 
 PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.SENSOR]
 
@@ -27,7 +27,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.data.setdefault(DOMAIN, {})
 
-    my_dyn_ip_api: MyDynIpApi = MyDynIpApi(
+    component_api: ComponentApi = ComponentApi(
         session,
     )
 
@@ -36,7 +36,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         LOGGER,
         name=DOMAIN,
         update_interval=timedelta(minutes=30),
-        update_method=my_dyn_ip_api.update,
+        update_method=component_api.update,
     )
 
     await coordinator.async_config_entry_first_refresh()
@@ -44,12 +44,12 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         "coordinator": coordinator,
-        "my_dyn_ip_api": my_dyn_ip_api,
+        "component_api": component_api,
     }
 
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
-    await async_setup_services(hass, my_dyn_ip_api)
+    await async_setup_services(hass, component_api)
 
     return True
 
@@ -77,11 +77,11 @@ async def update_listener(
 ) -> None:
     """Reload on config entry update."""
 
-    my_dyn_ip_api: MyDynIpApi = hass.data[DOMAIN][config_entry.entry_id][
-        "my_dyn_ip_api"
+    component_api: ComponentApi = hass.data[DOMAIN][config_entry.entry_id][
+        "component_api"
     ]
 
     await hass.config_entries.async_reload(config_entry.entry_id)
-    await my_dyn_ip_api.update()
+    await component_api.update()
 
     return

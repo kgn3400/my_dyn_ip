@@ -12,7 +12,7 @@ from homeassistant.helpers.update_coordinator import (
 from .const import DOMAIN, DOMAIN_NAME
 
 
-class MyDynIpEntity(CoordinatorEntity[DataUpdateCoordinator], Entity):
+class ComponentEntity(CoordinatorEntity[DataUpdateCoordinator], Entity):
     """Defines a My dyn ip entity."""
 
     _attr_has_entity_name = True
@@ -29,6 +29,6 @@ class MyDynIpEntity(CoordinatorEntity[DataUpdateCoordinator], Entity):
             identifiers={(DOMAIN, DOMAIN_NAME)},
             manufacturer="KGN",
             suggested_area="Hjem",
-            sw_version="1.0.2",
+            sw_version="1.0.1",
             name=DOMAIN_NAME,
         )

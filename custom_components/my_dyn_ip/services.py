@@ -1,11 +1,13 @@
 """Services for My dyn ip integration."""
 from homeassistant.core import HomeAssistant
-from .my_dyn_ip_api import MyDynIpApi
+from .component_api import ComponentApi
 from .const import DOMAIN
 
 
-async def async_setup_services(hass: HomeAssistant, my_dyn_ip_api: MyDynIpApi) -> None:
+async def async_setup_services(
+    hass: HomeAssistant, component_api: ComponentApi
+) -> None:
     """Set up the services for the My dyn ip integration."""
 
-    hass.services.async_register(DOMAIN, "update", my_dyn_ip_api.update_service)
-    hass.services.async_register(DOMAIN, "reset", my_dyn_ip_api.reset_service)
+    hass.services.async_register(DOMAIN, "update", component_api.update_service)
+    hass.services.async_register(DOMAIN, "reset", component_api.reset_service)
