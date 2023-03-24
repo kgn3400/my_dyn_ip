@@ -5,13 +5,13 @@
 
 import asyncio
 from dataclasses import dataclass
+from datetime import datetime, timedelta
 
 from aiohttp.client import ClientSession
 import async_timeout
 
 from homeassistant.core import ServiceCall
-
-from datetime import datetime, timedelta
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 
 # ------------------------------------------------------------------
@@ -30,16 +30,19 @@ class ComponentApi:
         self.changed: bool = False
         self.ip: str = ""
         self._clear_changed_at: datetime = datetime.now()
+        self.coordinator: DataUpdateCoordinator
 
     # ------------------------------------------------------------------
     async def reset_service(self, call: ServiceCall) -> None:
         """My dyn ip service api"""
         self.changed = False
+        await self.coordinator.async_refresh()
 
     # ------------------------------------------------------------------
     async def update_service(self, call: ServiceCall) -> None:
         """My dyn ip service api"""
         await self.update()
+        await self.coordinator.async_refresh()
 
     # ------------------------------------------------------------------
     async def update(self) -> None:
@@ -53,6 +56,9 @@ class ComponentApi:
             self.close_session = True
 
         tmp_ip: str = await self._get_ip()
+
+        if tmp_ip == "":
+            return
 
         if self.ip == "":
             self.ip = tmp_ip

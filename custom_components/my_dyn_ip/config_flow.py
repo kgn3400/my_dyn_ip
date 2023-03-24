@@ -19,8 +19,8 @@ class ComponentConfigFlow(ConfigFlow, domain=DOMAIN):
     ) -> FlowResult:
         """Handle a flow initialized by the user."""
 
-        if self._async_current_entries():
-            return self.async_abort(reason="single_instance_allowed")
+        await self.async_set_unique_id(DOMAIN)
+        self._abort_if_unique_id_configured()
 
         # if user_input is not None:
         return self.async_create_entry(title=DOMAIN_NAME, data={})
