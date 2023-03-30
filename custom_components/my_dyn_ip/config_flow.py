@@ -6,7 +6,7 @@ from typing import Any
 from homeassistant.config_entries import ConfigFlow
 from homeassistant.data_entry_flow import FlowResult
 
-from .const import DOMAIN_NAME, DOMAIN
+from .const import DOMAIN, DOMAIN_NAME
 
 
 class ComponentConfigFlow(ConfigFlow, domain=DOMAIN):

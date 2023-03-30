@@ -9,9 +9,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
+from .component_api import ComponentApi
 from .const import DOMAIN
 from .entity import ComponentEntity
-from .component_api import ComponentApi
 
 
 # ------------------------------------------------------
@@ -20,7 +20,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Setup for My dyn ip"""
+    """Entry for My dyn ip setup."""
     coordinator = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     component_api: ComponentApi = hass.data[DOMAIN][entry.entry_id]["component_api"]
 
@@ -34,7 +34,7 @@ async def async_setup_entry(
 # ------------------------------------------------------
 # ------------------------------------------------------
 class MyDynIpIpSensor(ComponentEntity, SensorEntity):
-    """Sensor class My dyn ip"""
+    """Sensor class My dyn ip."""
 
     # ------------------------------------------------------
     def __init__(
@@ -43,6 +43,7 @@ class MyDynIpIpSensor(ComponentEntity, SensorEntity):
         entry: ConfigEntry,
         component_api: ComponentApi,
     ) -> None:
+        """My dyn ip sensor."""
         super().__init__(coordinator, entry)
 
         self.component_api = component_api
@@ -53,21 +54,25 @@ class MyDynIpIpSensor(ComponentEntity, SensorEntity):
     # ------------------------------------------------------
     @property
     def name(self) -> str:
+        """Name."""
         return self._name
 
     # ------------------------------------------------------
     @property
     def icon(self) -> str:
+        """Icon."""
         return "mdi:ip-network"
 
     # ------------------------------------------------------
     @property
     def native_value(self) -> str | None:
+        """Native value."""
         return self.component_api.ip
 
     # ------------------------------------------------------
     @property
     def extra_state_attributes(self) -> dict:
+        """Extra state attributes."""
         attr: dict = {}
 
         return attr
@@ -75,6 +80,7 @@ class MyDynIpIpSensor(ComponentEntity, SensorEntity):
     # ------------------------------------------------------
     @property
     def unique_id(self) -> str:
+        """Unique id."""
         return self._unique_id
 
     # ------------------------------------------------------

@@ -1,4 +1,4 @@
-"""Support for My dyn ip."""
+"""Binary sensor for My dyn ip."""
 from __future__ import annotations
 
 from homeassistant.components.binary_sensor import BinarySensorEntity
@@ -7,9 +7,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
+from .component_api import ComponentApi
 from .const import DOMAIN
 from .entity import ComponentEntity
-from .component_api import ComponentApi
 
 
 # ------------------------------------------------------
@@ -18,7 +18,7 @@ async def async_setup_entry(
     entry: ConfigEntry,
     async_add_entities: AddEntitiesCallback,
 ) -> None:
-    """Setup for My dyn ip"""
+    """Entry for My dyn ip setup."""
     coordinator = hass.data[DOMAIN][entry.entry_id]["coordinator"]
     component_api: ComponentApi = hass.data[DOMAIN][entry.entry_id]["component_api"]
 
@@ -32,7 +32,7 @@ async def async_setup_entry(
 # ------------------------------------------------------
 # ------------------------------------------------------
 class MyDynIpBinarySensor(ComponentEntity, BinarySensorEntity):
-    """Sensor class for My dyn ip"""
+    """Sensor class for My dyn ip."""
 
     # ------------------------------------------------------
     def __init__(
@@ -41,6 +41,7 @@ class MyDynIpBinarySensor(ComponentEntity, BinarySensorEntity):
         entry: ConfigEntry,
         component_api: ComponentApi,
     ) -> None:
+        """My dyn ip binary sensor."""
         super().__init__(coordinator, entry)
 
         self.component_api = component_api
@@ -52,11 +53,21 @@ class MyDynIpBinarySensor(ComponentEntity, BinarySensorEntity):
     # ------------------------------------------------------
     @property
     def name(self) -> str:
+        """Name.
+
+        Returns:
+            str: Name
+        """
         return self._name
 
     # ------------------------------------------------------
     @property
     def icon(self) -> str:
+        """Icon.
+
+        Returns:
+            str: Icon
+        """
         return "mdi:ip-network"
 
     # ------------------------------------------------------
@@ -69,6 +80,11 @@ class MyDynIpBinarySensor(ComponentEntity, BinarySensorEntity):
     # ------------------------------------------------------
     @property
     def extra_state_attributes(self) -> dict:
+        """Extra state attributes.
+
+        Returns:
+            dict: Extra state attributes
+        """
         attr: dict = {}
 
         return attr
@@ -76,6 +92,11 @@ class MyDynIpBinarySensor(ComponentEntity, BinarySensorEntity):
     # ------------------------------------------------------
     @property
     def unique_id(self) -> str:
+        """Unique id.
+
+        Returns:
+            str: Unique id
+        """
         return self._unique_id
 
     # ------------------------------------------------------

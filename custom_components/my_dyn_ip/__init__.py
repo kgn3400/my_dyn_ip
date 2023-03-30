@@ -9,13 +9,9 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
-from .services import async_setup_services
-
-from .const import (
-    DOMAIN,
-    LOGGER,
-)
 from .component_api import ComponentApi
+from .const import DOMAIN, LOGGER
+from .services import async_setup_services
 
 PLATFORMS: list[Platform] = [Platform.BINARY_SENSOR, Platform.SENSOR]
 

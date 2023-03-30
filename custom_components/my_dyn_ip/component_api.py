@@ -1,7 +1,4 @@
-""" ------------------------------------------------------------------
-# File name : my_dyn_ip_api.py
-# Copyright 2023 KGN Data. All rights reserved.
-# ------------------------------------------------------------------"""
+"""My dyn ip api."""
 
 import asyncio
 from dataclasses import dataclass
@@ -18,12 +15,13 @@ from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 # ------------------------------------------------------------------
 @dataclass
 class ComponentApi:
-    """My dyn ip Api"""
+    """My dyn ip Api."""
 
     def __init__(
         self,
         session: ClientSession | None,
     ) -> None:
+        """My dyn ip api."""
         self.session: ClientSession | None = session
         self.request_timeout: int = 5
         self.close_session: bool = False
@@ -34,19 +32,19 @@ class ComponentApi:
 
     # ------------------------------------------------------------------
     async def reset_service(self, call: ServiceCall) -> None:
-        """My dyn ip service api"""
+        """My dyn ip service api."""
         self.changed = False
         await self.coordinator.async_refresh()
 
     # ------------------------------------------------------------------
     async def update_service(self, call: ServiceCall) -> None:
-        """My dyn ip service api"""
+        """My dyn ip service api."""
         await self.update()
         await self.coordinator.async_refresh()
 
     # ------------------------------------------------------------------
     async def update(self) -> None:
-        """My dyn ip api"""
+        """My dyn ip api."""
 
         if self.changed and self._clear_changed_at < datetime.now():
             self.changed = False
